@@ -1,0 +1,549 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Servidor - Maieutiké</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #339797;
+            --primary-dark: #00CCCC;
+            --primary-light: #80FFFF;
+            --primary-very-light: #E6FFFF;
+            --secondary: #FF00FF;
+            --dark: #333333;
+            --light: #FFFFFF;
+            --gray: #F5F5F5;
+            --success: #00CC66;
+            --warning: #FFAA00;
+            --danger: #FF4444;
+        }
+
+        body {
+            background-color: var(--gray);
+            color: var(--dark);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--light);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Main Layout */
+        .container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--light);
+            padding: 2rem 1rem;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-title {
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .nav-item:hover {
+            background-color: var(--primary-very-light);
+        }
+
+        .nav-item.active {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 2rem;
+            border-radius: 15px;
+            color: var(--light);
+            margin-bottom: 2rem;
+        }
+
+        /* System Status */
+        .system-status {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .status-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-online {
+            background-color: var(--success);
+        }
+
+        .status-warning {
+            background-color: var(--warning);
+        }
+
+        .status-offline {
+            background-color: var(--danger);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--gray);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+        }
+
+        /* Quick Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Management Sections */
+        .management-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .management-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-very-light);
+        }
+
+        .user-list {
+            list-style: none;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray);
+        }
+
+        .user-item:last-child {
+            border-bottom: none;
+        }
+
+        .user-role {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .role-admin {
+            background-color: var(--primary-very-light);
+            color: var(--primary-dark);
+        }
+
+        .role-teacher {
+            background-color: #E6F7FF;
+            color: #0066CC;
+        }
+
+        .role-student {
+            background-color: #F0FFF0;
+            color: var(--success);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-very-light);
+        }
+
+        .btn-small {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        /* Action Bar */
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--primary-very-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Maieutiké - Administração</div>
+            <div class="user-info">
+                <span>Servidor - Beatris</span>
+                <div class="avatar">BC</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="nav-section">
+                <div class="nav-title">Monitoramento</div>
+                <div class="nav-item active">
+                    <span>📊</span> Dashboard
+                </div>
+                <div class="nav-item">
+                    <span>🖥️</span> Status do Sistema
+                </div>
+                <div class="nav-item">
+                    <span>📈</span> Métricas
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">Gestão de Usuários</div>
+                <div class="nav-item">
+                    <span>👥</span> Todos os Usuários
+                </div>
+                <div class="nav-item">
+                    <span>🏫</span> Gestão de Turmas
+                </div>
+                <div class="nav-item">
+                    <span>👨‍🏫</span> Professores
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">Conteúdo & Sistema</div>
+                <div class="nav-item">
+                    <span>📚</span> Moderação de Conteúdo
+                </div>
+                <div class="nav-item">
+                    <span>⚙️</span> Configurações
+                </div>
+                <div class="nav-item">
+                    <span>🛡️</span> Segurança
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">Relatórios</div>
+                <div class="nav-item">
+                    <span>📋</span> Relatórios Gerais
+                </div>
+                <div class="nav-item">
+                    <span>🎯</span> Analytics
+                </div>
+                <div class="nav-item">
+                    <span>📊</span> Logs do Sistema
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Banner -->
+            <section class="welcome-banner">
+                <h1>Painel Administrativo 🛠️</h1>
+                <p>Monitoramento e gestão completa da plataforma Maieutiké</p>
+            </section>
+
+            <!-- System Status -->
+            <div class="system-status">
+                <div class="status-card">
+                    <div class="status-header">
+                        <h3>Servidores</h3>
+                        <div style="display: flex; align-items: center;">
+                            <div class="status-indicator status-online"></div>
+                            <span style="color: var(--success); font-weight: bold;">Online</span>
+                        </div>
+                    </div>
+                    <p>Status dos servidores da plataforma</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                    <small>85% de capacidade utilizada</small>
+                </div>
+
+                <div class="status-card">
+                    <div class="status-header">
+                        <h3>Banco de Dados</h3>
+                        <div style="display: flex; align-items: center;">
+                            <div class="status-indicator status-online"></div>
+                            <span style="color: var(--success); font-weight: bold;">Online</span>
+                        </div>
+                    </div>
+                    <p>Performance do SQLite</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <small>60% de capacidade utilizada</small>
+                </div>
+
+                <div class="status-card">
+                    <div class="status-header">
+                        <h3>Rede</h3>
+                        <div style="display: flex; align-items: center;">
+                            <div class="status-indicator status-warning"></div>
+                            <span style="color: var(--warning); font-weight: bold;">Instável</span>
+                        </div>
+                    </div>
+                    <p>Conexão com as ETECs</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%"></div>
+                    </div>
+                    <small>45% de estabilidade</small>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">1,247</div>
+                    <div>Usuários Totais</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">42</div>
+                    <div>Professores</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">28</div>
+                    <div>Turmas Ativas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">356</div>
+                    <div>Materiais</div>
+                </div>
+            </div>
+
+            <!-- Management Sections -->
+            <div class="management-grid">
+                <!-- Recent Users -->
+                <div class="management-card">
+                    <div class="card-header">
+                        <h3>Usuários Recentes</h3>
+                        <button class="btn btn-primary btn-small">Ver Todos</button>
+                    </div>
+                    <ul class="user-list">
+                        <li class="user-item">
+                            <div>
+                                <strong>Maria Silva</strong>
+                                <div>maria.silva@etec</div>
+                            </div>
+                            <span class="user-role role-student">Aluno</span>
+                        </li>
+                        <li class="user-item">
+                            <div>
+                                <strong>João Santos</strong>
+                                <div>joao.santos@etec</div>
+                            </div>
+                            <span class="user-role role-teacher">Professor</span>
+                        </li>
+                        <li class="user-item">
+                            <div>
+                                <strong>Ana Costa</strong>
+                                <div>ana.costa@etec</div>
+                            </div>
+                            <span class="user-role role-admin">Admin</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- System Actions -->
+                <div class="management-card">
+                    <div class="card-header">
+                        <h3>Ações Rápidas</h3>
+                    </div>
+                    <div style="display: grid; gap: 1rem;">
+                        <button class="btn btn-primary" style="text-align: left;">
+                            <span style="margin-right: 0.5rem;">📊</span>
+                            Gerar Relatório
+                        </button>
+                        <button class="btn btn-secondary" style="text-align: left;">
+                            <span style="margin-right: 0.5rem;">🔄</span>
+                            Backup do Sistema
+                        </button>
+                        <button class="btn btn-secondary" style="text-align: left;">
+                            <span style="margin-right: 0.5rem;">🛡️</span>
+                            Verificar Segurança
+                        </button>
+                        <button class="btn btn-secondary" style="text-align: left;">
+                            <span style="margin-right: 0.5rem;">🧹</span>
+                            Limpar Cache
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="action-bar">
+                <button class="btn btn-primary">Exportar Dados</button>
+                <button class="btn btn-secondary">Configurações Avançadas</button>
+                <button class="btn btn-secondary">Suporte Técnico</button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Interação básica para demonstração
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Simular ações do sistema
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const action = this.textContent.trim();
+                if (!action.includes('Ver Todos')) {
+                    alert(`Executando: ${action}`);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
