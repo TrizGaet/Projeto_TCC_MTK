@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Perfil - Maieutiké</title>
+    <title>Login Aluno - Maieutiké</title>
     <style>
         * {
             margin: 0;
@@ -12,533 +12,378 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+
         :root {
-            --primary: #339797;
-            --primary-dark: #2a7a7a;
-            --primary-light: #80c9c9;
+            --primary: #102c2c97;
+            --primary-dark: #0ee8e8;
+            --primary-light: #086092;
             --primary-very-light: #e6f7f7;
             --secondary: #ff6b6b;
             --dark: #333333;
             --light: #FFFFFF;
             --gray: #f8f9fa;
             --gray-dark: #e9ecef;
-            --success: #00CC66;
         }
+
 
         body {
-            background-color: var(--gray);
-            color: var(--dark);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
         }
 
-        /* Header */
-        .header {
+
+        .login-container {
+            background: var(--light);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+        }
+
+
+        .login-header {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--light);
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 2rem;
+            text-align: center;
         }
 
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        /* Main Layout */
-        .container {
-            display: flex;
-            min-height: calc(100vh - 80px);
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            background-color: var(--light);
-            padding: 2rem 1rem;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        }
-
-        .nav-item {
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .nav-item:hover {
-            background-color: var(--primary-very-light);
-        }
-
-        .nav-item.active {
-            background-color: var(--primary);
-            color: var(--light);
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
-            padding: 2rem;
-        }
-
-        /* Profile Header */
-        .profile-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 15px;
-            padding: 2rem;
-            color: var(--light);
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 4px solid var(--light);
-            background: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .profile-info h1 {
             font-size: 2rem;
+            font-weight: bold;
             margin-bottom: 0.5rem;
         }
 
-        .profile-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
+
+        .logo-subtitle {
+            opacity: 0.9;
             font-size: 0.9rem;
-            margin-bottom: 1rem;
         }
 
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+
+        .login-content {
+            padding: 2rem;
+        }
+
+
+        .welcome-text {
+            text-align: center;
             margin-bottom: 2rem;
         }
 
-        .stat-card {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            border-left: 4px solid var(--primary);
-        }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
+        .welcome-text h2 {
+            color: var(--dark);
             margin-bottom: 0.5rem;
         }
 
-        /* Content Sections */
-        .content-section {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
 
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary-very-light);
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            color: var(--dark);
-        }
-
-        /* Course List */
-        .course-list {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .course-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border-radius: 8px;
-            background: var(--gray);
-            transition: all 0.3s ease;
-        }
-
-        .course-item:hover {
-            background: var(--primary-very-light);
-        }
-
-        .course-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--light);
-            font-weight: bold;
-        }
-
-        .course-info h4 {
-            margin-bottom: 0.2rem;
-        }
-
-        .course-progress {
-            flex: 1;
-            max-width: 200px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: var(--gray-dark);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            border-radius: 3px;
-        }
-
-        /* Activity List */
-        .activity-list {
-            display: grid;
-            gap: 1rem;
-        }
-
-        .activity-item {
-            padding: 1rem;
-            border-left: 3px solid var(--primary);
-            background: var(--primary-very-light);
-            border-radius: 0 8px 8px 0;
-        }
-
-        .activity-meta {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-top: 0.5rem;
-        }
-
-        .activity-time {
-            font-size: 0.8rem;
+        .welcome-text p {
             color: #666;
+            font-size: 0.9rem;
         }
 
-        .activity-badge {
-            background: var(--primary);
-            color: var(--light);
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: bold;
+
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        /* Buttons */
-        .btn {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--gray-dark);
+            border-radius: 10px;
+            font-size: 1rem;
             transition: all 0.3s ease;
         }
+
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-very-light);
+        }
+
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
 
         .btn-primary {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--light);
         }
 
+
         .btn-primary:hover {
-            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(51, 151, 151, 0.4);
         }
 
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
+
+        .login-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--gray-dark);
         }
 
-        .btn-secondary:hover {
-            background-color: var(--primary-very-light);
-        }
 
-        .btn-small {
-            padding: 0.4rem 0.8rem;
+        .footer-text {
+            color: #666;
             font-size: 0.8rem;
         }
 
-        /* Edit Button */
-        .edit-profile {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
+
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Role Selection */
+        .role-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+
+        .role-option {
+            text-align: center;
+            padding: 0.8rem;
+            border: 2px solid var(--gray-dark);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--light);
+        }
+
+
+        .role-option:hover {
+            border-color: var(--primary-light);
+        }
+
+
+        .role-option.selected {
+            border-color: var(--primary);
+            background: var(--primary-very-light);
+            color: var(--primary-dark);
+        }
+
+
+        .role-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+
+
+        .role-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 1rem;
+            }
+           
+            .login-header {
+                padding: 1.5rem;
+            }
+           
+            .login-content {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
+    <div class="login-container">
+        <!-- Header -->
+        <div class="login-header">
             <div class="logo">Maieutiké</div>
-            <div class="user-info">
-                <span>Beatris Caetano</span>
-                <div class="avatar">BC</div>
+            <div class="logo-subtitle">Plataforma Educacional Colaborativa</div>
+        </div>
+
+
+        <!-- Content -->
+        <div class="login-content">
+            <div class="welcome-text">
+                <h2>Bem-vindo de volta! 👋</h2>
+                <p>Entre na sua conta para continuar aprendendo</p>
+            </div>
+
+
+            <form id="loginForm">
+                <!-- Role Selection -->
+                <div class="role-selection">
+                    <div class="role-option selected" data-role="aluno">
+                        <div class="role-icon">🎓</div>
+                        <div class="role-name">Aluno</div>
+                    </div>
+                    <div class="role-option" data-role="professor">
+                        <div class="role-icon">👨‍🏫</div>
+                        <div class="role-name">Professor</div>
+                    </div>
+                    <div class="role-option" data-role="servidor">
+                        <div class="role-icon">⚙️</div>
+                        <div class="role-name">Servidor</div>
+                    </div>
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">E-mail institucional</label>
+                    <input
+                        type="email"
+                        id="email"
+                        class="form-control"
+                        placeholder="seu.email@etec.sp.gov.br"
+                        required
+                    >
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input
+                        type="password"
+                        id="password"
+                        class="form-control"
+                        placeholder="Digite sua senha"
+                        required
+                    >
+                </div>
+
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">
+                    Entrar na Plataforma
+                </button>
+            </form>
+
+
+            <!-- Footer -->
+            <div class="login-footer">
+                <p class="footer-text">
+                    Problemas para entrar?
+                    <a href="#" class="footer-link">Recuperar senha</a>
+                </p>
+                <p class="footer-text" style="margin-top: 0.5rem;">
+                    Novo por aqui?
+                    <a href="#" class="footer-link">Criar conta</a>
+                </p>
             </div>
         </div>
-    </header>
-
-    <div class="container">
-        <!-- Sidebar -->
-        <nav class="sidebar">
-            <div class="nav-item">
-                <span>🏠</span> Início
-            </div>
-            <div class="nav-item">
-                <span>📚</span> Meus Cursos
-            </div>
-            <div class="nav-item active">
-                <span>👤</span> Meu Perfil
-            </div>
-            <div class="nav-item">
-                <span>💬</span> Mensagens
-            </div>
-            <div class="nav-item">
-                <span>🎯</span> Atividades
-            </div>
-            <div class="nav-item">
-                <span>📊</span> Desempenho
-            </div>
-            <div class="nav-item">
-                <span>⚙️</span> Configurações
-            </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Profile Header -->
-            <section class="profile-header">
-                <div class="edit-profile">
-                    <button class="btn btn-secondary btn-small">✏️ Editar Perfil</button>
-                </div>
-                
-                <div class="profile-avatar">
-                    BC
-                </div>
-                
-                <div class="profile-info">
-                    <h1>Beatris Caetano Leite</h1>
-                    <div class="profile-badge">🎓 Desenvolvimento de Sistemas - 3º Módulo</div>
-                    <p>ETEC de Itapevi - Centro Paula Souza</p>
-                    <p>beatris.leite@etec.sp.gov.br</p>
-                </div>
-            </section>
-
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">42</div>
-                    <div>Contribuições</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">15</div>
-                    <div>Dúvidas Solucionadas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">5</div>
-                    <div>Cursos Ativos</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">Nível 7</div>
-                    <div>Reputação</div>
-                </div>
-            </div>
-
-            <!-- My Courses -->
-            <section class="content-section">
-                <div class="section-header">
-                    <h2 class="section-title">🎯 Meus Cursos Ativos</h2>
-                    <button class="btn btn-primary btn-small">Ver Todos</button>
-                </div>
-                
-                <div class="course-list">
-                    <div class="course-item">
-                        <div class="course-icon">💻</div>
-                        <div class="course-info">
-                            <h4>Programação Web</h4>
-                            <p>Prof. Carlos Silva</p>
-                        </div>
-                        <div class="course-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 75%"></div>
-                            </div>
-                            <small>75% completo</small>
-                        </div>
-                    </div>
-                    
-                    <div class="course-item">
-                        <div class="course-icon">🗄️</div>
-                        <div class="course-info">
-                            <h4>Banco de Dados</h4>
-                            <p>Prof. Ana Costa</p>
-                        </div>
-                        <div class="course-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 60%"></div>
-                            </div>
-                            <small>60% completo</small>
-                        </div>
-                    </div>
-                    
-                    <div class="course-item">
-                        <div class="course-icon">🌐</div>
-                        <div class="course-info">
-                            <h4>Redes de Computadores</h4>
-                            <p>Prof. João Santos</p>
-                        </div>
-                        <div class="course-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 45%"></div>
-                            </div>
-                            <small>45% completo</small>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Recent Activity -->
-            <section class="content-section">
-                <div class="section-header">
-                    <h2 class="section-title">📈 Atividade Recente</h2>
-                    <button class="btn btn-secondary btn-small">Ver Histórico</button>
-                </div>
-                
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <p><strong>Respondeu uma dúvida</strong> sobre Python na sala de Programação</p>
-                        <div class="activity-meta">
-                            <span class="activity-time">Há 2 horas</span>
-                            <span class="activity-badge">+5 pontos</span>
-                        </div>
-                    </div>
-                    
-                    <div class="activity-item">
-                        <p><strong>Completou o exercício</strong> de SQL Avançado com 95% de acerto</p>
-                        <div class="activity-meta">
-                            <span class="activity-time">Há 1 dia</span>
-                            <span class="activity-badge">+10 pontos</span>
-                        </div>
-                    </div>
-                    
-                    <div class="activity-item">
-                        <p><strong>Compartilhou material</strong> de estudo sobre protocolos de rede</p>
-                        <div class="activity-meta">
-                            <span class="activity-time">Há 2 dias</span>
-                            <span class="activity-badge">+8 pontos</span>
-                        </div>
-                    </div>
-                    
-                    <div class="activity-item">
-                        <p><strong>Participou da aula ao vivo</strong> de Desenvolvimento Front-end</p>
-                        <div class="activity-meta">
-                            <span class="activity-time">Há 3 dias</span>
-                            <span class="activity-badge">+3 pontos</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Action Buttons -->
-            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                <button class="btn btn-primary">Compartilhar Perfil</button>
-                <button class="btn btn-secondary">Exportar Dados</button>
-                <button class="btn btn-secondary">Configurações</button>
-            </div>
-        </main>
     </div>
 
+
     <script>
-        // Navegação da sidebar
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
+        // Role Selection
+        const roleOptions = document.querySelectorAll('.role-option');
+        let selectedRole = 'aluno';
+
+
+        roleOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // Remove selected class from all options
+                roleOptions.forEach(opt => opt.classList.remove('selected'));
+               
+                // Add selected class to clicked option
+                this.classList.add('selected');
+               
+                // Update selected role
+                selectedRole = this.getAttribute('data-role');
             });
         });
 
-        // Simular ações dos botões
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const action = this.textContent.trim();
-                if (action === 'Editar Perfil') {
-                    alert('Abrindo editor de perfil...');
-                } else if (action === 'Ver Todos' || action === 'Ver Histórico') {
-                    alert(`Carregando ${action.toLowerCase()}...`);
-                } else if (action.includes('Compartilhar') || action.includes('Exportar')) {
-                    alert(`Preparando ${action.toLowerCase()}...`);
+
+        // Form Submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+           
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+
+            // Simulação de login - você integrará com sua API depois
+            if (email && password) {
+                // Mostrar loading
+                const btn = this.querySelector('button');
+                const originalText = btn.textContent;
+                btn.textContent = 'Entrando...';
+                btn.disabled = true;
+
+
+                // Simular requisição
+                setTimeout(() => {
+                    alert(`Bem-vindo ${selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1)}! \nEmail: ${email}`);
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                   
+                    // Aqui você redirecionaria para a página principal
+                    // window.location.href = '/dashboard-aluno.html';
+                }, 1500);
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        });
+
+
+        // Efeitos visuais nos inputs
+        const inputs = document.querySelectorAll('.form-control');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+           
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.classList.remove('focused');
                 }
-            });
-        });
-
-        // Efeito hover nos cursos
-        document.querySelectorAll('.course-item').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateX(5px)';
-            });
-            
-            item.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateX(0)';
             });
         });
     </script>
 </body>
 </html>
+
+
+
+
+
+
